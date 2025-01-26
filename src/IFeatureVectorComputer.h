@@ -2,13 +2,13 @@
 
 #include "opencv2/core.hpp"
 
-#include "FeatureVector.h"
+#include "FeatureVector.hpp"
 
 namespace cbir {
 
 template<typename dtype, size_t D>
 class IFeatureVectorComputer {
-    virtual FeatureVector<dtype, D> compute(const cv2::Mat& image) = 0;
+    virtual FeatureVector<dtype, D> compute(const cv::Mat& image) = 0;
 };
 
 } // namespace cbir
