@@ -8,13 +8,13 @@ find_package(GTest REQUIRED)
 
 add_executable(cbir
                 src/main.cpp
-                src/FeatureVector.hpp
+                src/FeatureVector.h
                 src/HsvHistogramFeatureVectorComputer.hpp
                 src/IFeatureDistanceComputer.h
                 src/IFeatureStorage.h
                 src/IFeatureVectorComputer.h
                 src/JsonFeatureStorage.h
-                src/ManhattanFeatureDistanceComputer.h)
+                src/ManhattanFeatureDistanceComputer.hpp)
 target_link_libraries(cbir PUBLIC ${OpenCV_LIBS})
 
 set_target_properties(cbir
@@ -23,15 +23,16 @@ set_target_properties(cbir
 target_compile_options(cbir PUBLIC -Wall -Wextra -Werror -pedantic)
 
 add_executable(tests
-                src/FeatureVector.hpp
+                src/FeatureVector.h
                 src/HsvHistogramFeatureVectorComputer.hpp
                 src/IFeatureDistanceComputer.h
                 src/IFeatureStorage.h
                 src/IFeatureVectorComputer.h
                 src/JsonFeatureStorage.h
-                src/ManhattanFeatureDistanceComputer.h
+                src/ManhattanFeatureDistanceComputer.hpp
 
                 tests/tests_HsvHistogramFeatureVectorComputer.cpp
+                tests/tests_ManhattanFeatureDistanceComputer.cpp
 )
 target_include_directories(tests PRIVATE "src/" "tests/" ${GTEST_INCLUDE_DIRS})
 target_link_libraries(tests ${OpenCV_LIBS} ${GTEST_BOTH_LIBRARIES})
