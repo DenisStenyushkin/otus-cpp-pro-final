@@ -2,7 +2,7 @@
 
 #include "opencv2/core.hpp"
 
-#include "FeatureVector.hpp"
+#include "FeatureVector.h"
 
 namespace cbir {
 

@@ -6,11 +6,11 @@
 namespace cbir {
 
 template<typename dtype, size_t D>
-class ManhattanFeatureDistanceComputer {
+class ManhattanFeatureDistanceComputer : IFeatureDistanceComputer<dtype, D> {
 public:
-    double compute(const FeatureVector<dtype, D>& v1, const FeatureVector<dtype, D>& v2) override;
-    double min_distance() override;
-    double max_distance() override;
+    double compute(const FeatureVector<dtype, D>& v1, const FeatureVector<dtype, D>& v2) override {
+        
+    }
 };
 
 } // namespace cbir

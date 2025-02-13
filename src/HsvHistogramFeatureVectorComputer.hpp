@@ -7,7 +7,7 @@
 #include "opencv2/imgproc.hpp"
 
 #include "IFeatureVectorComputer.h"
-#include "FeatureVector.hpp"
+#include "FeatureVector.h"
 
 namespace cbir
 {
