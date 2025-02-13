@@ -97,3 +97,9 @@ make install
 pip3 cache purge
 apt-get autoremove -y
 apt-get clean
+
+cd ~
+git clone https://github.com/google/googletest.git googletest \
+    && cd ./googletest \
+    && cmake . \
+    && cmake --build . --target install
