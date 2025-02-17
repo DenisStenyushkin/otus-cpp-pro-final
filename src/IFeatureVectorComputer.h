@@ -8,7 +8,8 @@ namespace cbir {
 
 template<typename dtype, size_t D>
 class IFeatureVectorComputer {
-    virtual FeatureVector<dtype, D> compute(const cv::Mat& image) = 0;
+public:
+    virtual FeatureVector<dtype, D> compute(const cv::Mat& image) const = 0;
 };
 
 } // namespace cbir

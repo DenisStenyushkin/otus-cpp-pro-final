@@ -14,10 +14,10 @@ namespace cbir
 
 constexpr size_t HSV_Features_D = 288 * 5;
 
-class HsvHistogramFeatureVectorComputer : IFeatureVectorComputer<float, HSV_Features_D> {
+class HsvHistogramFeatureVectorComputer : public IFeatureVectorComputer<float, HSV_Features_D> {
 public:
 
-    FeatureVector<float, HSV_Features_D> compute(const cv::Mat& image) override {
+    FeatureVector<float, HSV_Features_D> compute(const cv::Mat& image) const override {
         cv::Mat image_hsv;
         cv::cvtColor(image, image_hsv, cv::COLOR_BGR2HSV);
 
@@ -66,7 +66,7 @@ public:
     }
 
 private:
-    cv::Mat claculate_hist(const cv::Mat& image, const cv::Mat& mask) {
+    cv::Mat claculate_hist(const cv::Mat& image, const cv::Mat& mask) const {
         cv::Mat hist;
         int channels[] = {0, 1, 2};
         int bins[] = {8, 12, 3};

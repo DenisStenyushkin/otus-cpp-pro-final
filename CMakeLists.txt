@@ -13,7 +13,7 @@ add_executable(cbir
                 src/IFeatureDistanceComputer.h
                 src/IFeatureStorage.h
                 src/IFeatureVectorComputer.h
-                src/JsonFeatureStorage.h
+                src/JsonFeatureStorage.hpp
                 src/ManhattanFeatureDistanceComputer.hpp)
 target_link_libraries(cbir PUBLIC ${OpenCV_LIBS})
 
@@ -28,11 +28,12 @@ add_executable(tests
                 src/IFeatureDistanceComputer.h
                 src/IFeatureStorage.h
                 src/IFeatureVectorComputer.h
-                src/JsonFeatureStorage.h
+                src/JsonFeatureStorage.hpp
                 src/ManhattanFeatureDistanceComputer.hpp
 
                 tests/tests_HsvHistogramFeatureVectorComputer.cpp
                 tests/tests_ManhattanFeatureDistanceComputer.cpp
+                tests/tests_JsonFeatureStorage.cpp
 )
 target_include_directories(tests PRIVATE "src/" "tests/" ${GTEST_INCLUDE_DIRS})
 target_link_libraries(tests ${OpenCV_LIBS} ${GTEST_BOTH_LIBRARIES})
