@@ -59,10 +59,10 @@ public:
                             return result;
                         });
 
-        std::partial_sort(distances.begin(), distances.begin() + n, distances.end(),
+        // distances[0] will be image itself, so we ignore account for it here and ignore when copying results
+        std::partial_sort(distances.begin(), distances.begin() + n + 1, distances.end(),
                           [](const auto& e1, const auto& e2) { return e1.second < e2.second; });
-
-        std::vector<std::pair<std::string, double>> result{distances.begin(), distances.begin() + n};
+        std::vector<std::pair<std::string, double>> result{distances.begin() + 1, distances.begin() + n + 1};
 
         return result;
     }

@@ -35,6 +35,10 @@ add_executable(tests
                 tests/tests_ManhattanFeatureDistanceComputer.cpp
                 tests/tests_JsonFeatureStorage.cpp
 )
+set_target_properties(tests
+                      PROPERTIES CXX_STANDARD 17 
+                      CXX_STANDARD_REQUIRED ON)
+target_compile_options(tests PUBLIC -Wall -Wextra -Werror -pedantic)
 target_include_directories(tests PRIVATE "src/" "tests/" ${GTEST_INCLUDE_DIRS})
 target_link_libraries(tests ${OpenCV_LIBS} ${GTEST_BOTH_LIBRARIES})
 
