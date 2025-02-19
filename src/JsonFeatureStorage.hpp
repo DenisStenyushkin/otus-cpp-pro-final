@@ -1,11 +1,14 @@
 #pragma once
 
 #include <algorithm>
+#include <filesystem>
+#include <fstream>
 #include <stdexcept>
 #include <string>
 #include <vector>
 #include <unordered_map>
 
+#include "json.hpp"
 #include "opencv2/core.hpp"
 
 #include "IFeatureStorage.h"
@@ -14,21 +17,22 @@
 #include "FeatureVector.h"
 
 
+using json = nlohmann::json;
+
 namespace cbir {
 
 template<typename dtype, size_t D>
 class JsonFeatureStorage : IFeatureStorage<dtype, D>
 {
 public:
-    JsonFeatureStorage(const IFeatureVectorComputer<dtype, D>& feature_vector_computer,
+    JsonFeatureStorage(std::string filename,
+                       const IFeatureVectorComputer<dtype, D>& feature_vector_computer,
                        const IFeatureDistanceComputer<dtype, D>& feature_distance_computer)
-        : feature_computer_{feature_vector_computer}, distance_computer_{feature_distance_computer}
+        : filename_{filename}, feature_computer_{feature_vector_computer}, distance_computer_{feature_distance_computer}
     {
-        read_from_file();
-    }
-
-    ~JsonFeatureStorage() override {
-        save();
+        if (std::filesystem::exists(std::filesystem::path{filename_})) {
+            read_from_file();
+        }
     }
 
     void add_image(const std::string& key, const cv::Mat& image) override {
@@ -68,15 +72,23 @@ public:
     }
 
     void save() override {
+        json j(features_);
+        std::ofstream file{filename_};
+        file << std::setw(4) << j;
     }
 
 private:
+    const std::string filename_;
     const IFeatureVectorComputer<dtype, D>& feature_computer_;
     const IFeatureDistanceComputer<dtype, D>& distance_computer_;
-    const std::string filename_ = "storage.json";
     std::unordered_map<std::string, FeatureVector<dtype, D>> features_;
 
     void read_from_file() {
+        json j;
+        std::ifstream file{filename_};
+
+        file >> j;
+        features_ = j.get<std::unordered_map<std::string, FeatureVector<dtype, D>>>();
     }
 
     void check_key(const std::string& key) {
