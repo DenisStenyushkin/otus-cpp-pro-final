@@ -54,6 +54,8 @@ public:
     }
 
     std::vector<std::pair<std::string, double>> find_nearest(const std::string& key, size_t n) override {
+        check_key(key);
+
         std::vector<std::pair<std::string, double>> distances;
         std::transform(features_.begin(), features_.end(), std::back_inserter(distances),
                         [this, &key](auto& pair) {

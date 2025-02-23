@@ -56,6 +56,25 @@ TEST(JsonFeatureStorage, find_nearest_WorksOK) {
     ASSERT_TRUE(res[1].first == img_names[2]);
 }
 
+TEST(JsonFeatureStorage, find_nearest_nokey_WorksOK) {
+    cbir::HsvHistogramFeatureVectorComputer feature_computer{};
+    cbir::ManhattanFeatureDistanceComputer<float, cbir::HSV_Features_D> distance_computer{};
+    cbir::JsonFeatureStorage<float, cbir::HSV_Features_D> storage{"dummy.json", feature_computer, distance_computer};
+
+    std::vector<std::string> img_names = { "100301.jpg", "100302.jpg", "100500.jpg", "100600.jpg", 
+                                           "101700.jpg", "102301.jpg", "104801.jpg",  };
+    std::vector<cv::Mat> images{};
+    for (const std::string& fname: img_names) {
+        images.push_back(cv::imread("/workspaces/otus-cpp-pro-final/tests/data/" + fname));
+    }
+
+    for (size_t i = 0; i < img_names.size(); ++i) {
+        storage.add_image(img_names[i], images[i]);
+    }
+
+    EXPECT_THROW(storage.find_nearest("not_exists", 2), std::runtime_error);
+}
+
 TEST(JsonFeatureStorage, save_WorksOK) {
     cbir::HsvHistogramFeatureVectorComputer feature_computer{};
     cbir::ManhattanFeatureDistanceComputer<float, cbir::HSV_Features_D> distance_computer{};
